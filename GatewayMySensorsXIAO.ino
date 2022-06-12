@@ -54,17 +54,20 @@
 //  _| \_,_| _|_|_| \___| \___|   ___/ _| \___| \_,_| \___|  
 //--------------------------------------------------------------------    
 // 2022/04/05 - FB V1.0.0
+// 2022/06/10 - FB V1.0.1 - id dht bug
 //--------------------------------------------------------------------
 
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define VERSION   "v1.0.0"
+#define VERSION   "v1.0.1"
 
 // Enable and select radio type attached
 #define MY_RADIO_RF24
 
-#define MY_RF24_PA_LEVEL     RF24_PA_MAX
+#define MY_RF24_PA_LEVEL    RF24_PA_MAX
+#define MY_RF24_DATARATE    RF24_250KBPS
+//#define MY_RF24_CHANNEL     96
 
 // Enable serial gateway
 #define MY_GATEWAY_SERIAL
@@ -87,8 +90,8 @@
 #define DHTPIN 0        // Broche sur laquelle est branché le DHT / what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302), DHT11
 
-#define CHILD_ID_TEMP 0  
-#define CHILD_ID_HUM 1
+#define CHILD_ID_TEMP 1  
+#define CHILD_ID_HUM 2
 
 
 uint32_t SEND_FREQUENCY_TEMP =   60000;
@@ -132,8 +135,10 @@ uint32_t currentTime;
 //--------------------------------------------------------------------
 void setup()
 { 
+  
   Serial.println(F("SETUP"));
   dht.begin();
+  
 }
 
 //--------------------------------------------------------------------
@@ -141,12 +146,13 @@ void setup()
 //--------------------------------------------------------------------
 void presentation()
 {
+
   Serial.println(F("PRESENTATION"));
-  //Send the sensor node sketch version information to the gateway
   sendSketchInfo("Gateway", VERSION);
 
   present(CHILD_ID_TEMP, S_TEMP);
   present(CHILD_ID_HUM, S_HUM);
+  
 }
 
 //--------------------------------------------------------------------
@@ -173,4 +179,5 @@ uint32_t currentTime = millis();
       lastSend_temp = currentTime;
     } 
   }  
+  
 }
