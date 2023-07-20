@@ -55,12 +55,14 @@
 //--------------------------------------------------------------------    
 // 2022/04/05 - FB V1.0.0
 // 2022/06/10 - FB V1.0.1 - id dht bug
+// 2023/07/20 - FB V1.0.2 - Fix serial error compilation
 //--------------------------------------------------------------------
+#define SerialUSB Serial
 
 // Enable debug prints to serial monitor
 #define MY_DEBUG
 
-#define VERSION   "v1.0.1"
+#define VERSION   "v1.0.2"
 
 // Enable and select radio type attached
 #define MY_RADIO_RF24
